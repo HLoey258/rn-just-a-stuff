@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Alert,
   Button,
   FlatList,
   Pressable,
@@ -8,6 +9,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -15,7 +17,54 @@ export default function App() {
   const [text, setText] = useState("");
   const [submit, setSubmit] = useState(false);
   const handleSumbmitBtn = () => {
-    setSubmit(!submit);
+    if (text.length > 3) {
+      setSubmit(!submit);
+    } else {
+      // ALERT COMPONENT
+
+      // Alert.alert( // the choice will be display form left to right
+      //   "Warning",
+      //   "You must enter at least 3 more characters",
+      //   [
+      //     {
+      //       text: "Do not",
+      //       onPress: () => {
+      //         console.warn("Do not pressed");
+      //       },
+      //     },
+      //     {
+      //       text: "OK",
+      //       onPress: () => {
+      //         console.warn("OK pressed");
+      //       },
+      //     },
+      //     {
+      //       text: "Cancel",
+      //       onPress: () => {
+      //         console.warn("Cancel pressed");
+      //       },
+      //     },
+      //   ],
+      //   {
+      //     cancelable: true, // this cancel able will allow you to close the toast message when click outside
+      //     onDismiss: () => {
+      //       console.warn("alert dimissed");
+      //     },
+      //   }
+      // );
+      // ToastAndroid.show("Hello this is a toast", 2000); // use the .show to present the toast 2000 is duration
+      // OR YOU CAN USE THIS
+      // ToastAndroid.show(
+      //   "This is a normal toast with short and long",
+      //   ToastAndroid.LONG // display for 3.5s
+      //   // ToastAndroid.SHORT // display for 2s
+      // );
+      ToastAndroid.showWithGravity(
+        "hello this is a toast message with gravity",
+        2000,
+        ToastAndroid.CENTER // display the toast at center of the page
+      );
+    }
   };
   const handleTextChange = (input) => {
     return setText(input);
@@ -35,12 +84,12 @@ export default function App() {
       ></TextInput>
 
       {/* BUTTON */}
-      {/* <Button
+      <Button
         title={submit ? "Clear" : "Sumbmit"} // In this component we only can use props to style the component
         onPress={handleSumbmitBtn}
         // disabled={submit}// disable or not the button
-        color={"gray"} // change button color 
-      ></Button> */}
+        color={"gray"} // change button color
+      ></Button>
 
       {/* TOUCHABLE */}
       {/* <TouchableOpacity
@@ -52,7 +101,7 @@ export default function App() {
       </TouchableOpacity> */}
 
       {/* PRESSABLE */}
-      <Pressable
+      {/* <Pressable
         onLongPress={handleSumbmitBtn}
         delayLongPress={2000}
         // delayHoverIn={}
@@ -62,7 +111,7 @@ export default function App() {
         // onPressIn={} onPressOut={}
       >
         <Text>sumbmit</Text>
-      </Pressable>
+      </Pressable> */}
 
       {submit ? (
         <Text className="mt-3">You just input this: {text}</Text>
