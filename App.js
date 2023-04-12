@@ -11,62 +11,54 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-export default function App() {
-  const [text, setText] = useState("");
-  const [submit, setSubmit] = useState(false);
-  const handleSumbmitBtn = () => {
-    setSubmit(!submit);
-  };
-  const handleTextChange = (input) => {
-    return setText(input);
+// to use react navigate npm this
+// npm install @react-navigation/native
+// depend on what are you using for react native project such as react native cli or expo
+// expo: npx expo install react-native-screens react-native-safe-area-context
+// reactnative cli: npm install react-native-screens react-native-safe-area-context
+// then go to react/stack
+// install: npm install @react-navigation/native-stack
+// IMPORT REACT NATIVE NAVIGATOR
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+const Stack = createNativeStackNavigator();
+
+const ScreenA = ({ navigation }) => {
+  const handleClick = () => {
+    navigation.navigate("ScreenB");
   };
   return (
-    <View className="mt-10 flex-1 items-center">
-      <Text className="text-center mb-3">Please input your name:</Text>
-      <TextInput
-        multiline // 2 line allowed
-        className="border-solid bg-slate-500 border-2 w-[40%] text-center rounded-md p-3 mb-5" // using text-center to center the value that you input
-        placeholder="Your name here..."
-        onChangeText={handleTextChange}
-        keyboardType="default" // find more in doc
-        maxLength={20}
-        // editable={false} // this probs will allowed/not you to edit text input
-        secureTextEntry={true} // turn text to dot (like password)
-      ></TextInput>
-
-      {/* BUTTON */}
-      {/* <Button
-        title={submit ? "Clear" : "Sumbmit"} // In this component we only can use props to style the component
-        onPress={handleSumbmitBtn}
-        // disabled={submit}// disable or not the button
-        color={"gray"} // change button color 
-      ></Button> */}
-
-      {/* TOUCHABLE */}
-      {/* <TouchableOpacity
-        onPress={handleSumbmitBtn}
-        className="p-3 bg-slate-500" // we can style for this component
-        activeOpacity={0.2} // set opacity when active
-      >
-        <Text>{submit ? "Clear" : "Sumbmit"}</Text>
-      </TouchableOpacity> */}
-
-      {/* PRESSABLE */}
+    <View className="flex-1 justify-center items-center">
+      <Text className="text-lg text-black p-4">This is screen A</Text>
       <Pressable
-        onLongPress={handleSumbmitBtn}
-        delayLongPress={2000}
-        // delayHoverIn={}
-        // delayHoverOut={}
-        // onHoverIn={}
-        // onHoverOut={}
-        // onPressIn={} onPressOut={}
+        className="p-6 bg-orange-200 rounded-xl rounded-2"
+        onPress={handleClick}
       >
-        <Text>sumbmit</Text>
+        <Text>Change to screen B</Text>
       </Pressable>
-
-      {submit ? (
-        <Text className="mt-3">You just input this: {text}</Text>
-      ) : null}
     </View>
+  );
+};
+
+const ScreenB = () => {
+  return (
+    <View className="flex-1 justify-center items-center">
+      <Text className="text-lg text-black p-4">This is screen B</Text>
+    </View>
+  );
+};
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          options={{ header: () => null }}
+          name="ScreenA"
+          component={ScreenA}
+        ></Stack.Screen>
+        <Stack.Screen name="ScreenB" component={ScreenB}></Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
